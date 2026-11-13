@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The 100-Year Flood Over a 30-Year Mortgage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f3f1ea; --card:#ffffff; --ink:#14202e; --muted:#5b6675; --line:#e2e5ea;
+    --blue:#1f5fa8; --blue-2:#3b82d6; --blue-soft:#dbe8f7; --red:#d1452f; --red-soft:#fbe3dd; --green:#2f8a57; --gold:#f2b632;
+    --navy:#0b2341;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  h1,h2{font-family:Fraunces,Georgia,serif;letter-spacing:-.01em}
+  a{color:var(--blue)}
+  code{background:#eef1f5;border-radius:4px;padding:1px 6px;font-size:.92em}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;overflow:hidden;color:#fff;
+    background:radial-gradient(1200px 500px at 80% -10%,#2c6fbf 0%,transparent 60%),linear-gradient(160deg,#0b2341 0%,#123a66 55%,#1b5591 100%);
+    padding:56px 20px 150px}
+  .hero .wrap{max-width:1080px;margin:0 auto;position:relative;z-index:2;display:grid;grid-template-columns:1.25fr 1fr;gap:36px;align-items:center}
+  @media (max-width:860px){.hero .wrap{grid-template-columns:1fr}}
+  .eyebrow{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:4px 10px;border-radius:999px;margin-bottom:14px}
+  .hero h1{margin:0 0 14px;font-size:clamp(2rem,4.6vw,3.3rem);line-height:1.08;font-weight:800}
+  .hero h1 em{font-style:normal;color:var(--gold)}
+  .hero p.lead{margin:0 0 22px;max-width:620px;opacity:.92;font-size:1.12rem}
+  .cta{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#1b1300;font-weight:700;text-decoration:none;padding:12px 20px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .15s}
+  .cta:hover{transform:translateY(-2px)}
+  .guess{background:rgba(255,255,255,.1);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:20px}
+  .guess h2{margin:0 0 6px;font-size:1.25rem}
+  .guess p{margin:0 0 12px;opacity:.9;font-size:.95rem}
+  .guess .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .guess button{font:inherit;font-weight:700;font-size:1.15rem;padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;transition:all .2s}
+  .guess button:hover:not(:disabled){background:rgba(255,255,255,.2);transform:translateY(-2px)}
+  .guess button.right{background:var(--green);border-color:#7fe0a8;animation:pop .4s}
+  .guess button.wrong{background:rgba(209,69,47,.55);border-color:#ff9c8a;animation:shake .4s}
+  .guess .answer{margin-top:12px;font-size:.95rem;min-height:1.4em}
+  @keyframes pop{50%{transform:scale(1.08)}}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .waves{position:absolute;left:0;right:0;bottom:-2px;height:140px;z-index:1}
+  .waves svg{width:200%;height:100%;position:absolute;left:0;bottom:0}
+  .w1{animation:drift 14s linear infinite;opacity:.35}
+  .w2{animation:drift 9s linear infinite reverse;opacity:.55}
+  .w3{animation:drift 20s linear infinite}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- HERO ART ---------- */
+  .hero-art{position:absolute;inset:0;z-index:0;pointer-events:none}
+  .hero-art svg{position:absolute;inset:0;width:100%;height:100%}
+  .spiral{transform-origin:1180px 170px;animation:spin 80s linear infinite}
+  @keyframes spin{to{transform:rotate(-360deg)}}
+  .bolt{opacity:0;animation:bolt 7s infinite}
+  .bolt.b2{animation-delay:3.4s}
+  @keyframes bolt{0%,88%,100%{opacity:0}89%{opacity:1}90%{opacity:.2}91.5%{opacity:.9}93%{opacity:0}}
+  .flashsky{position:absolute;inset:0;background:#cfe4ff;opacity:0;animation:skyflash 7s infinite;z-index:0;pointer-events:none}
+  @keyframes skyflash{0%,88%,100%{opacity:0}89%{opacity:.14}91.5%{opacity:.08}93%{opacity:0}}
+  .rainfx{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.35;
+    background-image:repeating-linear-gradient(105deg,transparent 0 22px,rgba(200,225,255,.35) 22px 23px,transparent 23px 47px);
+    background-size:200px 200px;animation:rainmove .6s linear infinite}
+  @keyframes rainmove{to{background-position:-60px 200px}}
+  @media (prefers-reduced-motion:reduce){.spiral,.bolt,.flashsky,.rainfx{animation:none}}
+
+  /* ---------- CHALLENGES ---------- */
+  .challenges{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:12px}
+  .chal{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:linear-gradient(180deg,#fbfcfe,#fff);display:flex;flex-direction:column;gap:8px;transition:border-color .2s,box-shadow .2s}
+  .chal.on{border-color:var(--gold);box-shadow:0 0 0 3px rgba(242,182,50,.25)}
+  .chal h3{margin:0;font-size:.98rem}
+  .chal p{margin:0;font-size:.86rem;color:var(--muted)}
+  .chal .take{display:none;color:var(--ink);background:#fff8e6;border-radius:8px;padding:8px 10px}
+  .chal.on .take{display:block}
+  .chal button{align-self:flex-start;margin-top:auto}
+
+  /* ---------- COMPARE ---------- */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:560px){.compare{grid-template-columns:1fr}}
+  .house-col{border-radius:14px;padding:14px;border:2px solid var(--line)}
+  .house-col.fp{border-color:#f3c1b6;background:linear-gradient(180deg,#fdf1ee,#fff)}
+  .house-col.safe{border-color:#b8e0c6;background:linear-gradient(180deg,#eef8f1,#fff)}
+  .house-col h3{margin:0 0 8px}
+  .house-col dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:.92rem}
+  .house-col dt{color:var(--muted)} .house-col dd{margin:0;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+  .decision{margin-top:14px;border-radius:14px;padding:16px;display:flex;gap:14px;align-items:center;color:#fff;transition:background .3s}
+  .decision .tag{font-family:Fraunces,Georgia,serif;font-size:1.5rem;font-weight:800;white-space:nowrap}
+  .decision.buy{background:linear-gradient(135deg,#2f8a57,#3fa76b)}
+  .decision.walk{background:linear-gradient(135deg,#b13a27,#d1452f)}
+  .decision.close{background:linear-gradient(135deg,#a8741a,#d39a2a)}
+  @media (max-width:560px){.decision{flex-direction:column;align-items:flex-start}}
+
+  /* ---------- LAYOUT ---------- */
+  main{max-width:1080px;margin:-40px auto 0;padding:0 20px 60px;position:relative;z-index:3}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 26px;margin-bottom:22px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 8px 24px rgba(16,24,40,.05)}
+  h2{font-size:1.45rem;margin:0 0 10px;font-weight:800}
+  h3{font-size:1.05rem;margin:18px 0 6px}
+  .muted{color:var(--muted)}
+  .grid{display:grid;grid-template-columns:minmax(290px,360px) 1fr;gap:22px;align-items:start}
+  @media (max-width:880px){.grid{grid-template-columns:1fr}}
+  .controls{position:sticky;top:14px}
+  @media (max-width:880px){.controls{position:static}}
+  .step{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;font-size:.85rem;margin-right:8px;vertical-align:2px}
+
+  /* ---------- SLIDERS ---------- */
+  .slider{margin-bottom:22px;padding:12px 12px 10px;border-radius:14px;transition:background .2s}
+  .slider:hover,.slider.active{background:#f4f7fb}
+  .slider label{display:flex;justify-content:space-between;align-items:baseline;font-weight:700;gap:8px}
+  .slider label .ico{font-size:1.1rem;margin-right:4px}
+  .slider .val{font-variant-numeric:tabular-nums;color:#fff;background:var(--blue);padding:2px 9px;border-radius:999px;font-size:.88rem;white-space:nowrap;transition:transform .15s}
+  .slider.active .val{transform:scale(1.08)}
+  .slider .help{font-size:.84rem;color:var(--muted);margin:2px 0 0}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:10px;border-radius:999px;margin:12px 0 6px;cursor:pointer;
+    background:linear-gradient(90deg,var(--c1,#3b82d6),var(--c2,#1f5fa8)) 0/var(--fill,50%) 100% no-repeat,#e3e8ef}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;border:4px solid var(--c2,#1f5fa8);box-shadow:0 2px 8px rgba(0,0,0,.25);transition:transform .15s}
+  input[type=range]:active::-webkit-slider-thumb{transform:scale(1.25)}
+  input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:4px solid var(--c2,#1f5fa8);box-shadow:0 2px 8px rgba(0,0,0,.25)}
+  input[type=range]:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+  .presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+  .presets button,.btn-ghost{font:inherit;font-size:.8rem;font-weight:600;border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 11px;cursor:pointer;transition:all .15s}
+  .presets button:hover,.btn-ghost:hover{background:var(--blue-soft);border-color:#b9d0ec;transform:translateY(-1px)}
+
+  /* ---------- SCENE ---------- */
+  .scene-wrap{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+  #scene{display:block;width:100%;height:auto}
+  .scene-badge{position:absolute;left:14px;top:12px;background:rgba(255,255,255,.88);backdrop-filter:blur(4px);border-radius:12px;padding:8px 12px;font-size:.84rem;line-height:1.35;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+  .scene-badge b{font-size:1.25rem;color:var(--red);font-variant-numeric:tabular-nums}
+  .scene-year{position:absolute;right:14px;top:12px;background:var(--navy);color:#fff;border-radius:12px;padding:6px 12px;font-weight:700;font-variant-numeric:tabular-nums;opacity:0;transition:opacity .3s}
+  .scene-year.on{opacity:1}
+  #water{transition:transform .9s cubic-bezier(.3,.7,.3,1)}
+  #water.surge{transition:transform .35s ease-out}
+  .drop{animation:fall var(--dur,.9s) linear infinite;animation-delay:var(--dl,0s)}
+  @keyframes fall{from{transform:translate(0,-60px)}to{transform:translate(-18px,240px)}}
+  .wave-top{animation:bob 3s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(3px)}}
+  .flash{animation:flash .6s}
+  @keyframes flash{30%{filter:brightness(1.8)}}
+  .shake{animation:shake .45s}
+  @media (prefers-reduced-motion:reduce){.drop,.wave-top,.w1,.w2,.w3{animation:none}}
+
+  /* ---------- STATS ---------- */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  @media (max-width:560px){.stats{grid-template-columns:1fr}}
+  .stat{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff}
+  .stat .k{font-size:.8rem;color:var(--muted);margin:0;font-weight:500}
+  .stat .v{font-size:1.85rem;font-weight:800;margin:2px 0 0;font-variant-numeric:tabular-nums;font-family:Fraunces,Georgia,serif}
+  .stat .s{font-size:.8rem;color:var(--muted);margin:2px 0 0}
+  .stat.map{background:linear-gradient(180deg,#f2f7fd,#fff)} .stat.map .v{color:var(--blue)}
+  .stat.real{background:linear-gradient(180deg,#fdf1ee,#fff)} .stat.real .v{color:var(--red)}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.88rem;margin:4px 0 0}
+  .legend span::before{content:"";display:inline-block;width:20px;height:3px;vertical-align:middle;margin-right:6px;background:currentColor}
+  .legend .l-map{color:var(--blue)} .legend .l-real{color:var(--red)}
+  .legend .l-safe{color:var(--green)}
+  .legend .l-safe::before{background:repeating-linear-gradient(90deg,var(--green) 0 2px,transparent 2px 5px)}
+  .legend .l-map::before{background:repeating-linear-gradient(90deg,var(--blue) 0 5px,transparent 5px 8px)}
+
+  /* ---------- SIMULATOR ---------- */
+  .sim-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:12px 18px;cursor:pointer;background:var(--navy);color:#fff;box-shadow:0 6px 16px rgba(11,35,65,.25);transition:transform .15s,opacity .2s}
+  .btn:hover:not(:disabled){transform:translateY(-2px)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .btn.gold{background:var(--gold);color:#1b1300;box-shadow:0 6px 16px rgba(242,182,50,.35)}
+  .timeline{display:grid;grid-template-columns:repeat(var(--n,30),1fr);gap:3px;margin:16px 0 6px}
+  .yr{aspect-ratio:1/1.6;border-radius:5px;background:#e9edf2;position:relative;transition:background .2s,transform .2s}
+  .yr.ok{background:#bfe3cc}
+  .yr.hit{background:var(--red);transform:scale(1.15);box-shadow:0 0 0 3px var(--red-soft)}
+  .yr.now{outline:2px solid var(--navy);outline-offset:1px}
+  .tl-labels{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted)}
+  .wallets{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  @media (max-width:560px){.wallets{grid-template-columns:1fr}}
+  .wallet{border-radius:14px;padding:12px 14px;border:1px solid var(--line)}
+  .wallet .k{font-size:.82rem;color:var(--muted);margin:0}
+  .wallet .v{font-family:Fraunces,Georgia,serif;font-size:1.6rem;font-weight:800;margin:0;font-variant-numeric:tabular-nums}
+  .wallet.un .v{color:var(--red)} .wallet.in .v{color:var(--blue)}
+  .sim-msg{margin-top:12px;padding:12px 14px;border-radius:12px;background:#f4f7fb;min-height:48px}
+  .tally{font-size:.85rem;color:var(--muted);margin-top:8px}
+
+  /* ---------- NEIGHBORS ---------- */
+  .hood{display:grid;grid-template-columns:repeat(20,1fr);gap:4px;margin:14px 0}
+  @media (max-width:560px){.hood{grid-template-columns:repeat(10,1fr)}}
+  .h{aspect-ratio:1;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+  .h svg{width:100%;height:100%;display:block}
+  .h .body{fill:#cfd8e3;transition:fill .3s}
+  .h .roof{fill:#8a99ab;transition:fill .3s}
+  .h .wet{opacity:0;transition:opacity .3s}
+  .h.flooded{transform:scale(1.12)}
+  .h.flooded .body{fill:#fbd2c9} .h.flooded .roof{fill:var(--red)} .h.flooded .wet{opacity:1}
+  .hood-result{display:flex;gap:16px;flex-wrap:wrap;align-items:baseline}
+  .big{font-family:Fraunces,Georgia,serif;font-size:2.4rem;font-weight:800;color:var(--red);line-height:1;font-variant-numeric:tabular-nums}
+
+  /* ---------- TABLE / MONEY ---------- */
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.93rem}
+  caption{text-align:left;font-weight:800;margin-bottom:8px;font-size:1.1rem;font-family:Fraunces,Georgia,serif}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  thead th{background:#f3f6fa;font-size:.82rem}
+  tbody tr:hover{background:#fafbfd}
+  .bar{display:inline-block;height:8px;border-radius:4px;background:var(--red);vertical-align:middle;margin-left:8px;opacity:.75;transition:width .4s}
+  .money{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:560px){.money{grid-template-columns:1fr}}
+  .verdict{margin-top:12px;padding:12px 14px;border-radius:12px;background:#f4f7fb;border-left:5px solid var(--blue)}
+  .callout{background:#fff8e6;border-color:#f0dca8}
+  ol li,ul li{margin-bottom:7px}
+  footer{max-width:1080px;margin:0 auto;padding:0 20px 40px;color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="flashsky" aria-hidden="true"></div>
+  <div class="rainfx" aria-hidden="true"></div>
+  <div class="hero-art" aria-hidden="true">
+    <svg viewBox="0 0 1440 640" preserveAspectRatio="xMidYMax slice">
+      <!-- hurricane spiral (satellite view) -->
+      <g class="spiral" fill="none" stroke="#ffffff" stroke-linecap="round">
+        <path d="M1180 170 m-14 0 a14 14 0 1 1 28 0" stroke-width="10" opacity=".22"/>
+        <path d="M1180 170 C1180 110 1260 100 1290 160 C1320 230 1240 300 1160 290 C1060 275 1020 180 1070 110 C1130 30 1270 20 1350 100" stroke-width="26" opacity=".07"/>
+        <path d="M1180 170 C1180 230 1100 240 1070 180 C1040 110 1120 40 1200 50 C1300 65 1340 160 1290 230 C1230 310 1090 320 1010 240" stroke-width="22" opacity=".06"/>
+        <path d="M1350 100 C1420 190 1400 330 1280 380 C1150 430 1000 370 960 260" stroke-width="34" opacity=".045"/>
+        <path d="M1010 240 C940 150 960 20 1080 -20 C1200 -60 1350 -10 1410 80" stroke-width="30" opacity=".045"/>
+      </g>
+      <!-- storm clouds -->
+      <g fill="#081a31" opacity=".55">
+        <ellipse cx="160" cy="40" rx="260" ry="70"/><ellipse cx="520" cy="10" rx="300" ry="70"/><ellipse cx="860" cy="30" rx="220" ry="60"/>
+      </g>
+      <!-- lightning -->
+      <polyline class="bolt" points="640,40 600,150 640,150 585,280" fill="none" stroke="#fff6c2" stroke-width="5" stroke-linejoin="round"/>
+      <polyline class="bolt b2" points="980,30 950,120 985,118 940,230" fill="none" stroke="#fff6c2" stroke-width="4" stroke-linejoin="round"/>
+      <!-- neighborhood silhouette standing in the water -->
+      <path fill="#081a31" opacity=".85" d="M0 560 V520 h40 v-30 l35 -28 l35 28 v30 h30 v-50 l45 -36 l45 36 v50 h25 v-24 l30 -24 l30 24 v24 h40 v-60 h14 v-20 h10 v20 h16 v60 h30 v-36 l40 -32 l40 32 v36 h20 v-28 l28 -22 l28 22 v28 h60 v-44 l42 -34 l42 34 v44 h26 v-22 l26 -20 l26 20 v22 h40 v-70 l18 -14 l18 14 v70 h30 v-38 l38 -30 l38 30 v38 h22 v-26 l30 -24 l30 24 v26 h50 v-48 l44 -36 l44 36 v48 h24 v-22 l26 -20 l26 20 v22 h36 v-40 l40 -32 l40 32 v40 h40 V560 Z"/>
+      <!-- flood-map grid lines -->
+      <g stroke="#ffffff" opacity=".04">
+        <line x1="0" y1="160" x2="1440" y2="160"/><line x1="0" y1="320" x2="1440" y2="320"/><line x1="0" y1="480" x2="1440" y2="480"/>
+        <line x1="360" y1="0" x2="360" y2="640"/><line x1="720" y1="0" x2="720" y2="640"/><line x1="1080" y1="0" x2="1080" y2="640"/>
+      </g>
+    </svg>
+  </div>
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">🏠 Climate risk for homebuyers</span>
+      <h1>"It's only a <em>100-year</em> flood zone." Should you still buy the house?</h1>
+      <p class="lead">A flood map says a 1% chance each year. That sounds like nothing. Over a 30-year mortgage it isn't, and with a warming climate, 1% won't stay 1%. Play with the sliders, watch the water rise, and live through 30 years of rolling the dice.</p>
+      <a class="cta" href="#play">Start playing ↓</a>
+    </div>
+    <div class="guess" id="guess">
+      <h2>Quick guess 🎲</h2>
+      <p>A house has a 1% chance of flooding every year. What's the chance it floods <strong>at least once</strong> during a 30-year mortgage?</p>
+      <div class="opts">
+        <button data-a="3">3%</button><button data-a="10">10%</button>
+        <button data-a="26">26%</button><button data-a="50">50%</button>
+      </div>
+      <div class="answer" id="answer"></div>
+    </div>
+  </div>
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 2400 140" preserveAspectRatio="none"><path d="M0 60 Q150 20 300 60 T600 60 T900 60 T1200 60 T1500 60 T1800 60 T2100 60 T2400 60 V140 H0Z" fill="#5d9be0"/></svg>
+    <svg class="w2" viewBox="0 0 2400 140" preserveAspectRatio="none"><path d="M0 80 Q200 45 400 80 T800 80 T1200 80 T1600 80 T2000 80 T2400 80 V140 H0Z" fill="#8bbcf0"/></svg>
+    <svg class="w3" viewBox="0 0 2400 140" preserveAspectRatio="none"><path d="M0 100 Q150 80 300 100 T600 100 T900 100 T1200 100 T1500 100 T1800 100 T2100 100 T2400 100 V140 H0Z" fill="#f3f1ea"/></svg>
+  </div>
+</header>
+
+<main>
+  <section class="card">
+    <h2>The decision</h2>
+    <p>You're a <strong>first-time homebuyer</strong> who found a house you like. The listing says it's in FEMA's <strong>"100-year floodplain"</strong> (a Special Flood Hazard Area). You need to decide: <strong>Do you buy it? If you do, is flood insurance worth the yearly premium?</strong> (With a federally backed mortgage, the lender will require it inside this zone. Just outside the zone, it's optional, and most people skip it.)</p>
+    <h3>The concept: return periods don't mean what people think</h3>
+    <p>A "100-year flood" doesn't come once every 100 years on a schedule. It's a flood with a <strong>1-in-100 (1%) chance of happening in any single year</strong>. Each year you own the house is another roll of the dice, so the chance of getting hit <em>at least once</em> keeps growing:</p>
+    <p style="text-align:center;font-size:1.05rem"><code>Chance of at least one flood in N years = 1 − (1 − p)<sup>N</sup></code></p>
+    <p style="margin-bottom:0">Flood maps assume <em>p</em> stays fixed. But <strong>sea-level rise and heavier downpours</strong> (warmer air holds about 7% more water vapor per °C) mean the odds are going up. The IPCC projects that at most coastal locations, sea levels that used to happen once a century will happen <em>at least once a year</em> sometime this century. So a 1% flood today might be a 2–3% flood by the time you've paid off the house.</p>
+  </section>
+
+  <section class="card" id="play">
+    <h2>🎯 Try these challenges</h2>
+    <p class="muted" style="margin:0">Each button sets the sliders for you. Watch what happens to the house, the chart, and the neighborhood, then read what it means.</p>
+    <div class="challenges">
+      <div class="chal" data-set='{"p0":1,"g":0,"n":30}'>
+        <h3>1. Find FEMA's 26%</h3>
+        <p>A 100-year zone, odds frozen, a full 30-year mortgage.</p>
+        <p class="take">The blue line ends at <strong>26%</strong>, about a 1-in-4 chance, which matches FEMA's own number. "100-year" is about the odds each year, not a schedule.</p>
+        <button class="btn-ghost">▶ Try it</button>
+      </div>
+      <div class="chal" data-set='{"p0":1,"g":6,"n":30}'>
+        <h3>2. Add climate change</h3>
+        <p>Same house, but on a coast where the odds rise fast.</p>
+        <p class="take">The red line climbs past <strong>half</strong> (55%). The gap between the lines grows mostly in the <em>later</em> years, which is exactly when you'd be counting on the house as your biggest asset.</p>
+        <button class="btn-ghost">▶ Try it</button>
+      </div>
+      <div class="chal" data-set='{"p0":1,"g":6,"n":5}'>
+        <h3>3. Sell after 5 years</h3>
+        <p>Fast-rising odds, but you only own it for 5 years.</p>
+        <p class="take">The two lines barely separate. <strong>The sliders multiply each other:</strong> rising odds only hurt a lot when you're exposed for a long time.</p>
+        <button class="btn-ghost">▶ Try it</button>
+      </div>
+      <div class="chal" data-set='{"p0":0.2,"g":6,"n":30}'>
+        <h3>4. The "safe" zone surprise</h3>
+        <p>A 500-year zone (insurance not required), on a fast-rising coast.</p>
+        <p class="take">Even "moderate risk" gets to about a <strong>1-in-7</strong> (15%) chance. That's part of why almost a third of NFIP claims come from <em>outside</em> high-risk areas.</p>
+        <button class="btn-ghost">▶ Try it</button>
+      </div>
+      <div class="chal" data-set='{"p0":1,"g":3,"n":30}' data-roll="1">
+        <h3>5. Feel the luck</h3>
+        <p>Defaults, then roll the dice a few times.</p>
+        <p class="take">Most runs come out flood-free, which is <strong>why people underestimate the risk</strong>. But more than 1 run in 3 (38% at these settings) sends you a repair bill that wipes out years of premiums.</p>
+        <button class="btn-ghost">▶ Try it</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="card controls" aria-label="Sliders">
+      <h2><span class="step">1</span>Your house</h2>
+
+      <div class="slider">
+        <label for="p0"><span><span class="ico">🌊</span>Flood chance this year</span><span class="val" id="p0v"></span></label>
+        <input type="range" id="p0" min="0.1" max="5" step="0.1" value="1">
+        <p class="help">What the flood map says today. 1% = "100-year" zone (high risk). 0.2% = "500-year" zone (moderate risk, insurance not required).</p>
+        <div class="presets">
+          <button data-p0="0.2">500-yr zone</button>
+          <button data-p0="1">100-yr zone</button>
+          <button data-p0="4">Repeat-flood area</button>
+        </div>
+      </div>
+
+      <div class="slider">
+        <label for="g"><span><span class="ico">🌡️</span>How fast the odds are rising</span><span class="val" id="gv"></span></label>
+        <input type="range" id="g" min="0" max="8" step="0.5" value="3">
+        <p class="help">Yearly % increase in the flood chance from climate change. 0% is what the flood map assumes. ~1%/yr is a modest inland rate tied to heavier rainstorms. ~6%/yr is a coast where today's 100-year flood becomes a yearly event by 2100.</p>
+        <div class="presets">
+          <button data-g="0">Map assumes</button>
+          <button data-g="1">Inland / heavy rain</button>
+          <button data-g="6">Fast / coastal</button>
+        </div>
+      </div>
+
+      <div class="slider">
+        <label for="n"><span><span class="ico">📅</span>Years you'll own it</span><span class="val" id="nv"></span></label>
+        <input type="range" id="n" min="1" max="30" step="1" value="30">
+        <p class="help">A full 30-year mortgage, or less if you plan to sell sooner.</p>
+      </div>
+
+      <div class="slider">
+        <label for="d"><span><span class="ico">🔨</span>Cost of one flood</span><span class="val" id="dv"></span></label>
+        <input type="range" id="d" min="10000" max="250000" step="5000" value="65000">
+        <p class="help">Repair cost each time it floods. Default ≈ the average NFIP claim for 2020–2024 (~$64k). Big hurricanes often run $100k+.</p>
+      </div>
+
+      <div class="slider">
+        <label for="prem"><span><span class="ico">🛡️</span>Insurance premium</span><span class="val" id="premv"></span></label>
+        <input type="range" id="prem" min="0" max="5000" step="50" value="1000">
+        <p class="help">Yearly flood insurance cost. NFIP policies in high-risk A/V zones average about $1,030/yr. Under FEMA's newer pricing, some coastal homes pay several thousand.</p>
+      </div>
+
+      <button class="btn-ghost" id="reset">↺ Reset to defaults</button>
+    </section>
+
+    <div>
+      <section class="card" aria-live="polite">
+        <h2><span class="step">2</span>Watch the water</h2>
+        <p class="muted" style="margin-top:0">The water level shows the flood chance in your <em>final</em> year of ownership. More rain = odds rising faster. If the water reaches the front door, that's a bad sign.</p>
+        <div class="scene-wrap" id="sceneWrap">
+          <svg id="scene" viewBox="0 0 640 280" role="img" aria-label="Illustration of a house with a river whose level rises with flood risk">
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop id="sky1" offset="0" stop-color="#9fd0ff"/><stop id="sky2" offset="1" stop-color="#e8f4ff"/></linearGradient>
+              <linearGradient id="wat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b82d6" stop-opacity=".85"/><stop offset="1" stop-color="#123a66" stop-opacity=".95"/></linearGradient>
+              <clipPath id="clip"><rect width="640" height="280"/></clipPath>
+            </defs>
+            <g clip-path="url(#clip)">
+              <rect width="640" height="280" fill="url(#sky)"/>
+              <circle id="sun" cx="560" cy="60" r="28" fill="#ffd45a" style="transition:opacity .6s"/>
+              <g id="clouds" style="transition:opacity .6s">
+                <g fill="#ffffff" id="cloudFill">
+                  <ellipse cx="120" cy="50" rx="55" ry="20"/><ellipse cx="150" cy="38" rx="35" ry="20"/><ellipse cx="95" cy="42" rx="28" ry="16"/>
+                  <ellipse cx="420" cy="42" rx="60" ry="20"/><ellipse cx="450" cy="30" rx="34" ry="18"/><ellipse cx="395" cy="34" rx="26" ry="14"/>
+                </g>
+              </g>
+              <g id="rain" stroke="#5f8fc4" stroke-width="2" stroke-linecap="round"></g>
+              <!-- hill + ground -->
+              <path d="M0 210 Q160 186 320 206 T640 200 V280 H0Z" fill="#7cb66a"/>
+              <path d="M0 222 Q200 206 360 220 T640 216 V280 H0Z" fill="#5f9b51"/>
+              <!-- tree -->
+              <rect x="96" y="160" width="10" height="50" fill="#6b4a2f"/>
+              <circle cx="101" cy="150" r="26" fill="#3f8a46"/><circle cx="84" cy="164" r="18" fill="#4a9a50"/><circle cx="118" cy="164" r="18" fill="#4a9a50"/>
+              <!-- house -->
+              <g id="house">
+                <rect x="250" y="140" width="150" height="72" fill="#f5efe4" stroke="#c9b9a0" stroke-width="2"/>
+                <polygon points="236,142 325,82 414,142" fill="#b5523b"/>
+                <rect x="360" y="92" width="16" height="30" fill="#8c3f2d"/>
+                <rect x="312" y="168" width="28" height="44" rx="2" fill="#6b4a2f"/>
+                <circle cx="334" cy="191" r="2" fill="#f2b632"/>
+                <rect x="266" y="158" width="30" height="24" fill="#bfe1ff" stroke="#c9b9a0" stroke-width="2"/>
+                <rect x="356" y="158" width="30" height="24" fill="#bfe1ff" stroke="#c9b9a0" stroke-width="2"/>
+                <line x1="281" y1="158" x2="281" y2="182" stroke="#c9b9a0" stroke-width="2"/><line x1="371" y1="158" x2="371" y2="182" stroke="#c9b9a0" stroke-width="2"/>
+                <rect x="240" y="210" width="170" height="6" fill="#9a8b76"/>
+              </g>
+              <!-- water -->
+              <g id="water">
+                <g class="wave-top"><path d="M-20 0 Q20 -8 60 0 T140 0 T220 0 T300 0 T380 0 T460 0 T540 0 T620 0 T700 0 V400 H-20Z" fill="url(#wat)"/></g>
+              </g>
+              <!-- danger line (drawn on top of the water) -->
+              <line x1="0" y1="212" x2="640" y2="212" stroke="#d1452f" stroke-width="1.5" stroke-dasharray="6 5" opacity=".8"/>
+              <text x="630" y="206" text-anchor="end" font-size="11" font-weight="700" fill="#d1452f" stroke="#fff" stroke-width="3" paint-order="stroke">front door level</text>
+            </g>
+          </svg>
+          <div class="scene-badge"><div>Flood chance in your final year</div><b id="sceneP">2.4%</b> <span id="sceneRP" class="muted"></span></div>
+          <div class="scene-year" id="sceneYear">Year 1</div>
+        </div>
+
+        <div class="stats">
+          <div class="stat map"><p class="k">What the map implies (odds fixed)</p><p class="v" id="cumMap"></p><p class="s" id="cumMapS"></p></div>
+          <div class="stat real"><p class="k">With rising odds</p><p class="v" id="cumReal"></p><p class="s" id="cumRealS"></p></div>
+          <div class="stat"><p class="k">Flood chance in your final year</p><p class="v" id="lastP"></p><p class="s" id="lastPS"></p></div>
+        </div>
+
+        <svg id="chart" viewBox="0 0 700 360" width="100%" role="img" aria-labelledby="chartTitle"></svg>
+        <div class="legend"><span class="l-map">Flood map assumption (chance stays fixed)</span><span class="l-real">With rising odds from climate change</span><span class="l-safe">Alternative house outside the floodplain (0.2% today, same rise)</span></div>
+      </section>
+
+      <section class="card">
+        <div class="sim-top">
+          <h2 style="margin:0"><span class="step">3</span>Live through your mortgage</h2>
+          <button class="btn gold" id="simBtn">🎲 Roll the dice</button>
+        </div>
+        <p class="muted">Each square is one year you own the house. Every year the computer rolls the dice using that year's flood chance. Red = flood. Run it a few times. Sometimes you get lucky, sometimes you don't, and that's the whole point of a return period.</p>
+        <div class="timeline" id="timeline"></div>
+        <div class="tl-labels"><span>Year 1</span><span id="tlEnd">Year 30</span></div>
+        <div class="wallets">
+          <div class="wallet un"><p class="k">💸 Without insurance: repair bills paid</p><p class="v" id="wUn">$0</p></div>
+          <div class="wallet in"><p class="k">🛡️ With insurance: premiums paid</p><p class="v" id="wIn">$0</p></div>
+        </div>
+        <div class="sim-msg" id="simMsg">Press <strong>Roll the dice</strong> to live through your years in the house.</div>
+        <div class="tally" id="tally"></div>
+      </section>
+
+      <section class="card">
+        <div class="sim-top">
+          <h2 style="margin:0"><span class="step">4</span>Your 100 neighbors</h2>
+          <button class="btn" id="hoodBtn">🔁 Re-roll the neighborhood</button>
+        </div>
+        <p class="muted">Picture 100 identical houses on your street, all with the same odds as yours. Here's one way the next <span class="nyrs">30</span> years could play out. The count bounces around from roll to roll, but it centers on the red "with rising odds" number above.</p>
+        <div class="hood" id="hood"></div>
+        <div class="hood-result">
+          <span class="big" id="hoodCount">0</span>
+          <span>of 100 houses flooded at least once in <span class="nyrs">30</span> years. Expected: <strong id="hoodExp"></strong>.</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <table id="tbl">
+          <caption>Year-by-year breakdown (with rising odds)</caption>
+          <thead><tr><th>Year of ownership</th><th>Flood chance that year (%)</th><th>Acts like a "__-year" flood (years)</th><th>Chance of ≥1 flood by then (%)</th><th>Chance by then if odds fixed (%)</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2><span class="step">5</span>What it means for your wallet</h2>
+        <p class="muted" style="margin-top:0">Long-run averages over the years you own the house. No inflation or discounting, and every flood is assumed to cost the amount on the slider.</p>
+        <div class="money">
+          <div class="stat real"><p class="k">Expected flood damage if uninsured</p><p class="v" id="expLoss"></p><p class="s" id="expLossS"></p></div>
+          <div class="stat map"><p class="k">Total premiums you'd pay</p><p class="v" id="totPrem"></p><p class="s" id="totPremS"></p></div>
+        </div>
+        <div class="verdict" id="verdict"></div>
+      </section>
+
+      <section class="card">
+        <h2><span class="step">6</span>Buy it, or walk away?</h2>
+        <p class="muted" style="margin-top:0">Your other option is a similar house just outside the floodplain, in a 500-year zone (0.2% chance today, rising at the same rate). The floodplain house usually lists for less. Is the discount big enough to cover the extra flood cost?</p>
+        <div class="slider" style="padding:6px 0 0;margin-bottom:14px">
+          <label for="disc"><span><span class="ico">🏷️</span>How much cheaper the floodplain house is</span><span class="val" id="discv"></span></label>
+          <input type="range" id="disc" min="0" max="100000" step="2500" value="15000">
+          <p class="help">The price difference between the two listings. This one is your call, so set it to match the houses you're actually comparing.</p>
+        </div>
+        <div class="compare">
+          <div class="house-col fp">
+            <h3>🌊 Floodplain house</h3>
+            <dl>
+              <dt>Chance of ≥1 flood</dt><dd id="cFpChance"></dd>
+              <dt>Insurance</dt><dd>Required by lender</dd>
+              <dt>Expected flood cost to you</dt><dd id="cFpCost"></dd>
+            </dl>
+          </div>
+          <div class="house-col safe">
+            <h3>⛰️ House outside the floodplain</h3>
+            <dl>
+              <dt>Chance of ≥1 flood</dt><dd id="cSafeChance"></dd>
+              <dt>Insurance</dt><dd>Optional</dd>
+              <dt>Expected flood damage (uninsured)</dt><dd id="cSafeCost"></dd>
+            </dl>
+          </div>
+        </div>
+        <div class="decision" id="decision"><span class="tag" id="decTag"></span><span id="decText"></span></div>
+        <p class="muted" style="font-size:.84rem;margin:10px 0 0">"Expected flood cost to you" for the floodplain house is your total premiums, since the lender requires insurance. If you set the premium to $0, it's the expected uninsured damage instead. Averages don't capture everything: even insured, a flood means months of disruption, and the uninsured "safe" house still has a small chance of a full repair bill.</p>
+      </section>
+    </div>
+  </div>
+
+  <section class="card callout">
+    <h2>Sanity check (do it on a calculator)</h2>
+    <p style="margin-bottom:0">With a 1% chance, 0% growth, and 30 years: chance of no flood in one year = 0.99. No flood for 30 years in a row = 0.99<sup>30</sup> ≈ 0.740. So the chance of at least one flood = 1 − 0.740 = <strong>0.260 → 26%</strong>. The page should show exactly that. Expected damage = 30 × 0.01 × $65,000 = <strong>$19,500</strong>, and the break-even premium = $19,500 ÷ 30 = <strong>$650/yr</strong>.</p>
+  </section>
+
+  <section class="card">
+    <h2>How the math works</h2>
+    <ul>
+      <li><strong>Flood chance in year t:</strong> <code>p<sub>t</sub> = p₀ × (1 + g)<sup>t−1</sup></code>, capped at 100%. Here <em>p₀</em> is today's chance and <em>g</em> is the yearly growth rate.</li>
+      <li><strong>Chance of at least one flood by year N:</strong> <code>1 − (1−p₁)(1−p₂)…(1−p<sub>N</sub>)</code>. Each year is treated as independent. With <em>g</em> = 0 this simplifies to <code>1 − (1−p₀)<sup>N</sup></code>.</li>
+      <li><strong>Equivalent return period:</strong> <code>1 / p<sub>t</sub></code>. A 2% chance acts like a "50-year flood."</li>
+      <li><strong>Expected number of floods:</strong> <code>p₁ + p₂ + … + p<sub>N</sub></code>. <strong>Expected damage</strong> = expected floods × cost per flood.</li>
+      <li><strong>Break-even ("actuarially fair") premium:</strong> expected damage ÷ years owned. Real premiums run higher because of insurer costs and the fact that losses are correlated (one storm floods thousands of homes at once).</li>
+      <li><strong>Dice-roll simulator and neighbors:</strong> each year a random number between 0 and 1 is drawn. If it's below <em>p<sub>t</sub></em>, that year floods. These use the exact same <em>p<sub>t</sub></em> as the chart, so over many runs they average out to the chart's numbers.</li>
+      <li><strong>Buy or walk away:</strong> extra flood cost = (floodplain premiums × years) − (expected damage at the 0.2% house). If the price discount is bigger than that, the floodplain house wins on average.</li>
+      <li><strong>Where the ~1%/yr "inland" setting comes from:</strong> the Fifth National Climate Assessment finds that heavy rainstorms have become more frequent <em>and</em> more intense across most of the U.S., with the biggest increases for the rarest events. The amount of rain falling on the heaviest 1% of days rose about 45% in the Midwest and 60% in the Northeast from 1958 to 2021. Spread over 63 years, a 45% rise works out to about 0.6% per year (1.45<sup>1/63</sup> ≈ 1.006). Since rare events are rising faster, we round to ~1% per year as an <strong>illustrative, deliberately modest</strong> inland rate (much slower than the coastal case). The physical reason is the Clausius–Clapeyron rule from class: warmer air holds about 7% more water vapor per °C.</li>
+      <li><strong>Where the ~6%/yr "fast" setting comes from:</strong> if a 1% event becomes a yearly (~100%) event in ~75 years, that's 100× more often, and 100<sup>1/75</sup> ≈ 1.063, so about 6.3% growth per year.</li>
+    </ul>
+    <h3>Limitations</h3>
+    <p class="muted">This is a teaching model, not a quote. It assumes steady exponential growth in flood odds (real trends depend on location, emissions, and local flood defenses). It treats years as independent and gives every flood the same cost. It also ignores deductibles, coverage limits (NFIP caps building coverage at $250,000), inflation, and premium changes under FEMA's Risk Rating 2.0 (which can raise a policy up to 18% per year until it reaches the full-risk rate). In the simulator, neighbors are independent, but in real life one storm floods a whole street at once.</p>
+  </section>
+
+  <section class="card">
+    <h2>Sources</h2>
+    <ul>
+      <li>FEMA / FloodSmart, <a href="https://floodsmart.gov/flood-zones-and-maps/what-is-my-flood-zone" target="_blank" rel="noopener">What are Flood Zones and Maps?</a>: high-risk zones carry a 26% chance of flooding over a 30-year mortgage; Zone X (shaded) ≈ 0.2% annual chance.</li>
+      <li>FEMA NFIP, <a href="https://agents.floodsmart.gov/sites/default/files/media/document/2025-08/fema_nfip_media-toolkit-brochure_07-2025.pdf" target="_blank" rel="noopener">Media Toolkit (July 2025)</a>: average NFIP claim of $63,691 for 2020–2024 (default cost of one flood).</li>
+      <li>FEMA NFIP policy data (March 2025), summarized by <a href="https://www.nerdwallet.com/insurance/homeowners/learn/flood-insurance-cost" target="_blank" rel="noopener">NerdWallet</a>: average NFIP premium of $1,031/yr in high-risk A/V zones and $691/yr in other zones (default premium).</li>
+      <li>FEMA, <a href="https://agents.floodsmart.gov/sites/default/files/media/document/2025-08/fema-understanding-risk-rating-2.0-fact-sheet-2025.pdf" target="_blank" rel="noopener">Understanding Risk Rating 2.0 fact sheet (July 2025)</a>: yearly premium increases capped at 18% until the full-risk rate is reached.</li>
+      <li>IPCC, <a href="https://www.ipcc.ch/srocc/chapter/summary-for-policymakers/spm-section-3/srocc_spm4_final_edit_sl/" target="_blank" rel="noopener">Special Report on the Ocean and Cryosphere, Figure SPM.4</a>: historical once-a-century sea levels become at least yearly events at most locations this century (basis for the "fast / coastal" setting).</li>
+      <li>Tebaldi et al. (2021), <a href="https://link.springer.com/10.1038/s41558-021-01127-1" target="_blank" rel="noopener">Nature Climate Change</a>: about half of 7,000+ coastal sites see today's 100-year sea level at least yearly by 2100, even at 1.5 °C.</li>
+      <li>Clausius–Clapeyron relation (course readings): about 7% more water vapor per °C of warming, which drives heavier downpours and inland flood risk.</li>
+      <li>USGCRP, <a href="https://www.climate.gov/media/16332" target="_blank" rel="noopener">Fifth National Climate Assessment (2023), extreme precipitation figures via NOAA Climate.gov</a>: the frequency and intensity of heavy precipitation have increased across much of the U.S., with larger increases for more extreme events. Rain on the heaviest 1% of days rose ~45% in the Midwest and ~60% in the Northeast (1958–2021), the basis for the "inland" setting.</li>
+      <li>FEMA NFIP, <a href="https://agents.floodsmart.gov/sites/default/files/media/document/2025-08/fema_nfip_media-toolkit-brochure_07-2025.pdf" target="_blank" rel="noopener">Media Toolkit (July 2025)</a>: from 2014 to 2024, almost one-third of NFIP claims came from outside mapped high-risk flood areas.</li>
+    </ul>
+  </section>
+</main>
+<footer>Built for a climate risk course project. Numbers are for teaching purposes; check your actual flood zone at <a href="https://msc.fema.gov/portal/home" target="_blank" rel="noopener">FEMA's Flood Map Service Center</a>.</footer>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const S = {p0:$('p0'), g:$('g'), n:$('n'), d:$('d'), prem:$('prem'), disc:$('disc')};
+  const DEFAULTS = {p0:1, g:3, n:30, d:65000, prem:1000, disc:15000};
+  const SAFE_P0 = 0.002;
+  const money = x => '$' + Math.round(x).toLocaleString('en-US');
+  const pct = (x, dp) => (x >= 0.995 && x < 1) ? '>99%' : (x*100).toFixed(dp===undefined ? (x<0.1?1:0) : dp) + '%';
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- count-up numbers ---------- */
+  function tween(el, to, fmt){
+    const from = el._v === undefined ? to : el._v; el._v = to;
+    if(reduce || from === to){ el.textContent = fmt(to); return; }
+    const t0 = performance.now(), dur = 380;
+    cancelAnimationFrame(el._raf);
+    const step = now => {
+      const k = Math.min(1, (now-t0)/dur), e = 1 - Math.pow(1-k, 3);
+      el.textContent = fmt(from + (to-from)*e);
+      if(k < 1) el._raf = requestAnimationFrame(step);
+    };
+    el._raf = requestAnimationFrame(step);
+  }
+
+  /* ---------- model ---------- */
+  function params(){ return {p0:+S.p0.value/100, g:+S.g.value/100, N:+S.n.value, D:+S.d.value, P:+S.prem.value}; }
+  function model(p0, g, N){
+    const rows = []; let surv = 1, expFloods = 0;
+    for(let t=1; t<=N; t++){
+      const p = Math.min(1, p0*Math.pow(1+g, t-1));
+      surv *= (1-p); expFloods += p;
+      rows.push({t, p, cumReal: 1-surv, cumMap: 1-Math.pow(1-p0, t)});
+    }
+    return {rows, expFloods};
+  }
+
+  /* ---------- guess game ---------- */
+  document.querySelectorAll('#guess button').forEach(b => b.addEventListener('click', () => {
+    const right = b.dataset.a === '26';
+    document.querySelectorAll('#guess button').forEach(x => { x.disabled = true; if(x.dataset.a === '26') x.classList.add('right'); });
+    if(!right) b.classList.add('wrong');
+    $('answer').innerHTML = (right ? '🎯 <strong>Nailed it.</strong> ' : '😬 <strong>Not quite, it\'s 26%.</strong> ') +
+      'That\'s roughly a 1-in-4 chance, and that\'s <em>before</em> climate change pushes the odds up. Scroll down to see why.';
+  }));
+
+  /* ---------- slider fill + active state ---------- */
+  function paintSlider(el){
+    const f = (el.value - el.min) / (el.max - el.min) * 100;
+    el.style.setProperty('--fill', f + '%');
+    if(el.id === 'g'){ el.style.setProperty('--c1', '#f2b632'); el.style.setProperty('--c2', f > 60 ? '#d1452f' : f > 25 ? '#e07b2e' : '#2f8a57'); }
+    if(el.id === 'p0'){ el.style.setProperty('--c2', f > 50 ? '#d1452f' : '#1f5fa8'); }
+  }
+  Object.values(S).forEach(el => {
+    const box = el.closest('.slider');
+    el.addEventListener('pointerdown', () => box.classList.add('active'));
+    ['pointerup','blur','pointercancel'].forEach(ev => el.addEventListener(ev, () => box.classList.remove('active')));
+  });
+
+  /* ---------- scene ---------- */
+  const lerp = (a,b,k) => a + (b-a)*k;
+  const mix = (c1, c2, k) => { const a = parseInt(c1.slice(1),16), b = parseInt(c2.slice(1),16);
+    const r = Math.round(lerp(a>>16, b>>16, k)), g = Math.round(lerp((a>>8)&255, (b>>8)&255, k)), bl = Math.round(lerp(a&255, b&255, k));
+    return '#' + ((1<<24) + (r<<16) + (g<<8) + bl).toString(16).slice(1); };
+  function waterY(p){
+    // log scale: 0.1% -> calm (y=262), ~25%+ -> over the front door (y=200)
+    const k = Math.max(0, Math.min(1, Math.log10(Math.max(p,0.001)/0.001) / Math.log10(250)));
+    return 262 - k*62;
+  }
+  let lastRainCount = -1;
+  function drawScene(lastP, g){
+    if(!simRunning) $('water').style.transform = `translateY(${waterY(lastP)}px)`;
+    const storm = Math.min(1, g/0.08);
+    $('sky1').setAttribute('stop-color', mix('#9fd0ff', '#4a5868', storm));
+    $('sky2').setAttribute('stop-color', mix('#e8f4ff', '#8d98a4', storm));
+    $('cloudFill').setAttribute('fill', mix('#ffffff', '#59626d', storm));
+    $('sun').style.opacity = 1 - storm*0.95;
+    const count = Math.round(storm*70);
+    if(count !== lastRainCount){
+      lastRainCount = count;
+      let s = '';
+      for(let i=0;i<count;i++){
+        const x = Math.random()*680, y = 40 + Math.random()*30, dur = (0.55 + Math.random()*0.4).toFixed(2), dl = (-Math.random()*1.2).toFixed(2);
+        s += `<line class="drop" x1="${x.toFixed(0)}" y1="${y.toFixed(0)}" x2="${(x-4).toFixed(0)}" y2="${(y+14).toFixed(0)}" style="--dur:${dur}s;--dl:${dl}s"/>`;
+      }
+      $('rain').innerHTML = s;
+    }
+    $('sceneP').textContent = pct(lastP, 1);
+    $('sceneRP').textContent = '≈ ' + Math.round(1/lastP) + '-yr flood';
+  }
+
+  /* ---------- chart ---------- */
+  function drawChart(rows, N, safeRows){
+    const W=700, H=360, m={l:64, r:20, t:36, b:56};
+    const iw=W-m.l-m.r, ih=H-m.t-m.b;
+    const x = t => m.l + (t/N)*iw;
+    const y = v => m.t + ih - v*ih;
+    let s = `<text id="chartTitle" x="${W/2}" y="20" text-anchor="middle" font-size="15" font-weight="700" fill="#14202e">Chance of at least one flood since you bought the house</text>`;
+    for(let v=0; v<=1.0001; v+=0.2){
+      s += `<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="#e6e9ee"/>`;
+      s += `<text x="${m.l-8}" y="${y(v)+4}" text-anchor="end" font-size="12" fill="#5b6675">${Math.round(v*100)}%</text>`;
+    }
+    const step = N<=10 ? 1 : 5;
+    for(let t=0; t<=N; t+=step) s += `<text x="${x(t)}" y="${H-m.b+18}" text-anchor="middle" font-size="12" fill="#5b6675">${t}</text>`;
+    if(N % step !== 0) s += `<text x="${x(N)}" y="${H-m.b+18}" text-anchor="middle" font-size="12" fill="#5b6675">${N}</text>`;
+    s += `<line x1="${m.l}" x2="${W-m.r}" y1="${y(0)}" y2="${y(0)}" stroke="#9aa3ad"/>`;
+    s += `<line x1="${m.l}" x2="${m.l}" y1="${m.t}" y2="${y(0)}" stroke="#9aa3ad"/>`;
+    s += `<text x="${m.l+iw/2}" y="${H-12}" text-anchor="middle" font-size="13" fill="#14202e">Years of ownership (years)</text>`;
+    s += `<text transform="translate(16 ${m.t+ih/2}) rotate(-90)" text-anchor="middle" font-size="13" fill="#14202e">Cumulative flood chance (%)</text>`;
+    const pts = k => `${x(0)},${y(0)} ` + rows.map(r=>`${x(r.t).toFixed(1)},${y(r[k]).toFixed(1)}`).join(' ');
+    const realPts = pts('cumReal');
+    s += `<polygon points="${realPts} ${x(N)},${y(0)}" fill="#d1452f" opacity="0.09"/>`;
+    const safePts = `${x(0)},${y(0)} ` + safeRows.map(r=>`${x(r.t).toFixed(1)},${y(r.cumReal).toFixed(1)}`).join(' ');
+    s += `<polyline points="${safePts}" fill="none" stroke="#2f8a57" stroke-width="2.5" stroke-dasharray="2 4" stroke-linecap="round"/>`;
+    s += `<polyline points="${pts('cumMap')}" fill="none" stroke="#1f5fa8" stroke-width="3" stroke-dasharray="7 4"/>`;
+    s += `<polyline points="${realPts}" fill="none" stroke="#d1452f" stroke-width="3.5" stroke-linejoin="round"/>`;
+    const last = rows[rows.length-1];
+    s += `<circle cx="${x(N)}" cy="${y(last.cumReal)}" r="6" fill="#d1452f" stroke="#fff" stroke-width="2"/>`;
+    s += `<circle cx="${x(N)}" cy="${y(last.cumMap)}" r="6" fill="#1f5fa8" stroke="#fff" stroke-width="2"/>`;
+    const lr = y(last.cumReal), lm = y(last.cumMap);
+    if(Math.abs(last.cumReal-last.cumMap) < 0.005){
+      s += `<text x="${x(N)-10}" y="${lr-10}" text-anchor="end" font-size="13" font-weight="700" fill="#14202e">${pct(last.cumReal,0)} (both)</text>`;
+    } else if(Math.abs(lr-lm) < 18){
+      s += `<text x="${x(N)-10}" y="${lr-10}" text-anchor="end" font-size="13" font-weight="700" fill="#d1452f">${pct(last.cumReal,0)}</text>`;
+      s += `<text x="${x(N)-10}" y="${lr-26}" text-anchor="end" font-size="13" font-weight="700" fill="#1f5fa8">map: ${pct(last.cumMap,0)}</text>`;
+    } else {
+      s += `<text x="${x(N)-10}" y="${lr-10}" text-anchor="end" font-size="13" font-weight="700" fill="#d1452f">${pct(last.cumReal,0)}</text>`;
+      s += `<text x="${x(N)-10}" y="${lm+20}" text-anchor="end" font-size="13" font-weight="700" fill="#1f5fa8">${pct(last.cumMap,0)}</text>`;
+    }
+    $('chart').innerHTML = s;
+  }
+
+  /* ---------- neighbors ---------- */
+  const HOUSE = '<svg viewBox="0 0 20 20"><polygon class="roof" points="1,9 10,2 19,9"/><rect class="body" x="3.5" y="9" width="13" height="9"/><rect class="wet" x="0" y="13.5" width="20" height="6.5" fill="#3b82d6" opacity=".85"/></svg>';
+  $('hood').innerHTML = Array.from({length:100}, () => `<div class="h">${HOUSE}</div>`).join('');
+  const hoodEls = [...document.querySelectorAll('#hood .h')];
+  function rollHood(){
+    const {p0,g,N} = params(); const {rows} = model(p0,g,N);
+    let count = 0;
+    hoodEls.forEach((el,i) => {
+      const hit = rows.some(r => Math.random() < r.p);
+      if(hit) count++;
+      el.classList.remove('flooded');
+      setTimeout(() => el.classList.toggle('flooded', hit), reduce ? 0 : i*6);
+    });
+    tween($('hoodCount'), count, v => Math.round(v));
+    $('hoodExp').textContent = Math.round(rows[rows.length-1].cumReal*100) + ' of 100';
+  }
+  $('hoodBtn').addEventListener('click', rollHood);
+
+  /* ---------- simulator ---------- */
+  let simRunning = false, runs = 0, unluckyRuns = 0;
+  function buildTimeline(N){
+    $('timeline').style.setProperty('--n', N);
+    $('timeline').innerHTML = Array.from({length:N}, (_,i) => `<div class="yr" title="Year ${i+1}"></div>`).join('');
+    $('tlEnd').textContent = 'Year ' + N;
+  }
+  function runSim(){
+    if(simRunning) return;
+    const {p0,g,N,D,P} = params(); const {rows} = model(p0,g,N);
+    simRunning = true; $('simBtn').disabled = true; $('simBtn').textContent = '⏳ Living it…';
+    buildTimeline(N);
+    const cells = [...document.querySelectorAll('#timeline .yr')];
+    let un = 0, ins = 0, hits = 0, t = 0;
+    $('wUn')._v = 0; $('wIn')._v = 0; $('wUn').textContent = '$0'; $('wIn').textContent = '$0';
+    $('sceneYear').classList.add('on');
+    $('simMsg').innerHTML = 'Rolling the dice…';
+    const delay = reduce ? 0 : Math.max(110, Math.min(380, 4200 / N));
+    const tick = () => {
+      if(t > 0) cells[t-1].classList.remove('now');
+      if(t >= N){ return finish(); }
+      const r = rows[t], flood = Math.random() < r.p;
+      cells[t].classList.add(flood ? 'hit' : 'ok', 'now');
+      ins += P;
+      $('sceneYear').textContent = 'Year ' + (t+1) + ' · ' + pct(r.p, 1) + ' chance';
+      if(flood){
+        hits++; un += D;
+        const w = $('water'); w.classList.add('surge'); w.style.transform = 'translateY(150px)';
+        $('sceneWrap').classList.remove('shake'); void $('sceneWrap').offsetWidth; $('sceneWrap').classList.add('shake');
+        $('simMsg').innerHTML = `🌊 <strong>Year ${t+1}: FLOOD!</strong> That's a ${money(D)} repair bill if you're uninsured.`;
+        setTimeout(() => { w.classList.remove('surge'); w.style.transform = `translateY(${waterY(r.p)}px)`; }, Math.min(700, delay*2));
+      } else {
+        $('water').style.transform = `translateY(${waterY(r.p)}px)`;
+      }
+      tween($('wUn'), un, money); tween($('wIn'), ins, money);
+      t++;
+      setTimeout(tick, flood ? delay*2.2 : delay);
+    };
+    const finish = () => {
+      runs++; if(hits > 0) unluckyRuns++;
+      let msg;
+      if(hits === 0) msg = `😅 <strong>You got lucky. No floods in ${N} years.</strong> Insurance would have cost you ${money(ins)} for nothing… this time. Roll again and see how often that holds up.`;
+      else if(un > ins) msg = `💥 <strong>${hits} flood${hits>1?'s':''} in ${N} years.</strong> Uninsured, you'd have paid ${money(un)} in repairs, compared with ${money(ins)} in premiums. Insurance would have saved you ${money(un-ins)}.`;
+      else msg = `🌧️ <strong>${hits} flood${hits>1?'s':''} in ${N} years.</strong> Repairs (${money(un)}) still cost less than ${N} years of premiums (${money(ins)}), but you'd have needed ${money(D)} in cash on hand the moment it hit.`;
+      $('simMsg').innerHTML = msg;
+      $('tally').textContent = `Your runs so far: flooded at least once in ${unluckyRuns} of ${runs} (${Math.round(unluckyRuns/runs*100)}%). The math says ${pct(rows[rows.length-1].cumReal,0)}. The more you roll, the closer it gets.`;
+      simRunning = false; $('simBtn').disabled = false; $('simBtn').textContent = '🎲 Roll again';
+      setTimeout(() => { if(!simRunning){ $('sceneYear').classList.remove('on'); const q = model(params().p0, params().g, params().N).rows; $('water').style.transform = `translateY(${waterY(q[q.length-1].p)}px)`; } }, 1600);
+    };
+    tick();
+  }
+  $('simBtn').addEventListener('click', runSim);
+
+  /* ---------- challenges ---------- */
+  document.querySelectorAll('.chal').forEach(c => c.querySelector('button').addEventListener('click', () => {
+    const set = JSON.parse(c.dataset.set);
+    for(const k in set) S[k].value = set[k];
+    document.querySelectorAll('.chal').forEach(x => x.classList.toggle('on', x === c));
+    update(true);
+    const target = c.dataset.roll ? $('simBtn').closest('.card') : $('sceneWrap');
+    target.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'center'});
+    if(c.dataset.roll) setTimeout(runSim, reduce ? 0 : 700);
+  }));
+
+  /* ---------- main update ---------- */
+  let hoodTimer;
+  function update(fromSlider){
+    Object.values(S).forEach(paintSlider);
+    const {p0,g,N,D,P} = params();
+    $('p0v').textContent = (+S.p0.value).toFixed(1) + '% · ' + Math.round(1/p0) + '-yr';
+    $('gv').textContent = (+S.g.value).toFixed(1) + '% / yr';
+    $('nv').textContent = N + (N===1?' year':' years');
+    $('dv').textContent = money(D);
+    $('premv').textContent = money(P) + ' / yr';
+    document.querySelectorAll('.nyrs').forEach(e => e.textContent = N);
+
+    const {rows, expFloods} = model(p0, g, N);
+    const last = rows[rows.length-1];
+    tween($('cumMap'), last.cumMap, v => pct(v,0));
+    $('cumMapS').textContent = 'about 1 in ' + (1/last.cumMap).toFixed(1) + ' over ' + N + (N===1?' yr':' yrs');
+    tween($('cumReal'), last.cumReal, v => pct(v,0));
+    const diff = last.cumReal - last.cumMap;
+    $('cumRealS').textContent = diff > 0.005 ? '+' + Math.round(diff*100) + ' points vs. the map' : 'same as the map';
+    tween($('lastP'), last.p, v => pct(v,1));
+    $('lastPS').textContent = 'acts like a ' + Math.round(1/last.p) + '-year flood';
+
+    drawScene(last.p, g);
+    const safe = model(SAFE_P0, g, N), safeLast = safe.rows[safe.rows.length-1];
+    drawChart(rows, N, safe.rows);
+
+    const marks = [...new Set([1,5,10,15,20,25,30].filter(t=>t<=N).concat([N]))].sort((a,b)=>a-b);
+    $('tbl').querySelector('tbody').innerHTML = marks.map(t=>{
+      const r = rows[t-1];
+      return `<tr><td>Year ${t}</td><td>${(r.p*100).toFixed(2)}</td><td>${Math.round(1/r.p).toLocaleString()}</td><td>${(r.cumReal*100).toFixed(1)}<span class="bar" style="width:${Math.round(r.cumReal*60)}px"></span></td><td>${(r.cumMap*100).toFixed(1)}</td></tr>`;
+    }).join('');
+
+    const expLoss = expFloods*D, totPrem = P*N, fair = expLoss/N;
+    tween($('expLoss'), expLoss, money);
+    $('expLossS').textContent = expFloods.toFixed(2) + ' expected floods × ' + money(D);
+    tween($('totPrem'), totPrem, money);
+    $('totPremS').textContent = money(P) + ' × ' + N + (N===1?' yr':' yrs');
+    let v = `<strong>Break-even premium: ${money(fair)}/yr.</strong> `;
+    if(P === 0){
+      v += `With no insurance, you carry all of the risk: a ${pct(last.cumReal,0)} chance of at least one ${money(D)} hit while you own the house.`;
+      $('verdict').style.borderLeftColor = 'var(--red)';
+    } else if(P <= fair){
+      v += `Your premium is <em>below</em> expected damage, so insurance pays off even on average. On top of that, it protects you from the ${pct(last.cumReal,0)} chance of a ${money(D)} hit.`;
+      $('verdict').style.borderLeftColor = 'var(--green)';
+    } else {
+      v += `Your premium is <em>above</em> expected damage by ${money(totPrem-expLoss)} over ${N} years. That gap is what you'd pay to avoid a ${pct(last.cumReal,0)} chance of a ${money(D)} hit. Whether it's worth it depends on whether you could cover that cost out of pocket.`;
+      $('verdict').style.borderLeftColor = 'var(--blue)';
+    }
+    $('verdict').innerHTML = v;
+
+    // ---- buy or walk away ----
+    const disc = +S.disc.value;
+    $('discv').textContent = money(disc);
+    const fpCost = P > 0 ? P*N : expLoss;
+    const safeCost = safe.expFloods*D;
+    const extra = fpCost - safeCost;
+    $('cFpChance').textContent = pct(last.cumReal, 0);
+    $('cSafeChance').textContent = pct(safeLast.cumReal, 0);
+    tween($('cFpCost'), fpCost, money);
+    tween($('cSafeCost'), safeCost, money);
+    const dec = $('decision'), net = disc - extra, yrs = N + (N===1?' year':' years');
+    dec.classList.remove('buy','walk','close');
+    if(extra <= 0){
+      dec.classList.add('buy'); $('decTag').textContent = '✅ Buy it';
+      $('decText').innerHTML = `At these settings this house isn't riskier than the 0.2% alternative, so flood risk isn't a reason to walk away. Any discount (${money(disc)}) is a bonus.`;
+    } else if(Math.abs(net) <= Math.max(2500, 0.15*Math.abs(extra))){
+      dec.classList.add('close'); $('decTag').textContent = '🤔 Toss-up';
+      $('decText').innerHTML = `Over ${N} years the floodplain house is expected to cost about <strong>${money(extra)}</strong> more in flood costs, and the discount is ${money(disc)}. That's close, so it comes down to how much you'd hate dealing with a flood.`;
+    } else if(net > 0){
+      dec.classList.add('buy'); $('decTag').textContent = '✅ Buy it';
+      $('decText').innerHTML = `The ${money(disc)} discount more than covers the <strong>${money(extra)}</strong> in extra expected flood costs over ${yrs}. On average you come out about <strong>${money(net)}</strong> ahead, but you'll still face a ${pct(last.cumReal,0)} chance of living through a flood.`;
+    } else {
+      dec.classList.add('walk'); $('decTag').textContent = '🚶 Walk away';
+      $('decText').innerHTML = `The floodplain house is expected to cost <strong>${money(extra)}</strong> more in flood costs over ${yrs}, but it's only ${money(disc)} cheaper. You'd need a discount of at least <strong>${money(extra)}</strong> for it to make sense.`;
+    }
+
+    if(!simRunning && fromSlider !== 'skipTimeline'){
+      buildTimeline(N);
+      if(fromSlider) { runs = 0; unluckyRuns = 0; $('tally').textContent = ''; }
+    }
+    clearTimeout(hoodTimer); hoodTimer = setTimeout(rollHood, fromSlider ? 250 : 0);
+  }
+
+  Object.values(S).forEach(el => el.addEventListener('input', () => update(true)));
+  document.querySelectorAll('[data-p0]').forEach(b => b.addEventListener('click', ()=>{S.p0.value=b.dataset.p0; update(true);}));
+  document.querySelectorAll('[data-g]').forEach(b => b.addEventListener('click', ()=>{S.g.value=b.dataset.g; update(true);}));
+  $('reset').addEventListener('click', ()=>{ for(const k in DEFAULTS) S[k].value = DEFAULTS[k]; update(true); });
+  update();
+})();
+</script>
+</body>
+</html>
