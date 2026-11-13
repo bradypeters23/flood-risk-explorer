@@ -4,7 +4,7 @@ An interactive website that helps a homebuyer understand what a "100-year floodp
 
 **Course concept:** return periods. A 1% annual chance compounds to about 26% over 30 years, and that number climbs even higher when the annual odds are rising because of sea-level rise and heavier rainfall.
 
-**Live site:** https://USERNAME.github.io/REPO-NAME/
+**Live site:** https://bradypeters23.github.io/flood-risk-explorer/
 
 **Built by:** Brady
 
